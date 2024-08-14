@@ -20,7 +20,6 @@ console.info(guessAllowed);
 
 function Game() {
   const [guessResults, setGuessResults] = React.useState([]);
-  const [gameOutcome, setGameOutcome] = React.useState(false) 
 
   console.debug("=====>Render Game");
   let result = {
@@ -35,7 +34,6 @@ function Game() {
     let winner = false
     let numTries = 0
 
-    console.debug("=>checkGameOutcome -> gameOutcome: " + gameOutcome);
     console.debug("=>checkGameOutcome -> nextGuessResults: " + nextGuessResults);
 
     nextGuessResults.map( (wordGuess, index) => {
@@ -59,7 +57,6 @@ function Game() {
       }
     })
 
-    setGameOutcome(gameOver)
     let newGameResult = {
       winner: winner,
       gameOver: gameOver,
