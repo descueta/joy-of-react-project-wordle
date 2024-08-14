@@ -22,22 +22,24 @@ function Game() {
   const [guessResults, setGuessResults] = React.useState([]);
   const [gameOutcome, setGameOutcome] = React.useState(false)
   const [winner, setWinner] = React.useState(false)
+  const [numTries, setNumTries] = React.useState('')
 
-  console.log("=====>Render Game");
+  console.debug("=====>Render Game");
   
   function checkGameOutcome(nextGuessResults) {    
     let gameOver = false
     let winner = false
+    let numTries = 0
 
-    console.log("=>checkGameOutcome -> gameOutcome: " + gameOutcome);
-    console.log("=>checkGameOutcome -> nextGuessResults: " + nextGuessResults);
+    console.debug("=>checkGameOutcome -> gameOutcome: " + gameOutcome);
+    console.debug("=>checkGameOutcome -> nextGuessResults: " + nextGuessResults);
 
     nextGuessResults.map( (wordGuess, index) => {
       let guessAnswer = checkGuess(wordGuess, answer)
       if (guessAnswer != null) {
-        console.log("=>checkGameOutcome -> wordGuess: " + wordGuess + " guessAnswer: " + JSON.stringify(guessAnswer))
+        console.debug("=>checkGameOutcome -> wordGuess: " + wordGuess + " guessAnswer: " + JSON.stringify(guessAnswer))
       } else {
-        console.log("=>checkGameOutcome -> wordGuess: " + wordGuess + " guessAnswer is null")
+        console.debug("=>checkGameOutcome -> wordGuess: " + wordGuess + " guessAnswer is null")
       }
 
       if (wordGuess === answer) {
@@ -53,15 +55,15 @@ function Game() {
 
     setGameOutcome(gameOver)
     setWinner(winner)
-    console.log("=>checkGameOutcome -> gameOver: " + gameOver + " | winner: " + winner);
+    setNumTries(numTries)
+    console.debug("=>checkGameOutcome -> gameOver: " + gameOver + " | winner: " + winner);
   }  
 
-  function handleAddGuess(word) {
-    console.info("-->handleAddGuess: word: " + word);
+  function handleAddGuess(word) {    
     const nextGuessResults = [...guessResults, word];
     setGuessResults(nextGuessResults); 
     checkGameOutcome(nextGuessResults);  
-    console.info("-->handleAddGuess: guessResults: " + guessResults + " nextGuessResults: " + nextGuessResults);
+    console.debug("-->handleAddGuess: word: " + word + " guessResults: " + guessResults + " nextGuessResults: " + nextGuessResults);
   }
 
 
@@ -69,7 +71,7 @@ function Game() {
   return (
   <>Put a game here!
 
-    <GameResultBanner guessResults={guessResults} gameWinner={winner} isGameOver={gameOutcome} answer={answer}/>
+    <GameResultBanner guessResults={guessResults} gameWinner={winner} isGameOver={gameOutcome} answer={answer} numTries={numTries}/>
 
     {      
       guessAllowed.map((count) => {
@@ -77,7 +79,7 @@ function Game() {
         if (guessResults[count] != undefined) {
           wordGuess = guessResults[count]
         }
-        console.log('guessAllowed count: ' + count + ' wordGuess: ' + wordGuess)
+        console.debug('->Display guessAllowed count: ' + count + ' wordGuess: ' + wordGuess)
         return <Guess key={Math.random()} wordGuess={wordGuess} answer={answer}/>
       })
     }
