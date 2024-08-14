@@ -20,11 +20,15 @@ console.info(guessAllowed);
 
 function Game() {
   const [guessResults, setGuessResults] = React.useState([]);
-  const [gameOutcome, setGameOutcome] = React.useState(false)
-  const [winner, setWinner] = React.useState(false)
-  const [numTries, setNumTries] = React.useState('')
+  const [gameOutcome, setGameOutcome] = React.useState(false) 
 
   console.debug("=====>Render Game");
+  let result = {
+    "gameOver" : false,
+    "winner" : false,
+    "numTries" : 0
+  }
+  const [gameResult, setGameResult] = React.useState(result)
   
   function checkGameOutcome(nextGuessResults) {    
     let gameOver = false
@@ -44,8 +48,10 @@ function Game() {
 
       if (wordGuess === answer) {
         winner = true
-        numTries = index + 1
+        numTries = numTries + 1
         gameOver = true
+      } else {
+        numTries = numTries + 1
       }
   
       if ((index == NUM_OF_GUESSES_ALLOWED - 1) && (!winner)) {        
@@ -54,9 +60,14 @@ function Game() {
     })
 
     setGameOutcome(gameOver)
-    setWinner(winner)
-    setNumTries(numTries)
+    let newGameResult = {
+      winner: winner,
+      gameOver: gameOver,
+      numTries: numTries      
+    }
+    setGameResult(newGameResult)
     console.debug("=>checkGameOutcome -> gameOver: " + gameOver + " | winner: " + winner);
+    console.debug("=>checkGameOutcome -> newGameResult: " + JSON.stringify(newGameResult));
   }  
 
   function handleAddGuess(word) {    
@@ -71,7 +82,7 @@ function Game() {
   return (
   <>Put a game here!
 
-    <GameResultBanner guessResults={guessResults} gameWinner={winner} isGameOver={gameOutcome} answer={answer} numTries={numTries}/>
+    <GameResultBanner guessResults={guessResults} answer={answer} gameResult={gameResult}/>
 
     {      
       guessAllowed.map((count) => {
