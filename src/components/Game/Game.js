@@ -95,7 +95,7 @@ function Game() {
       })
     }
     
-    <GuessInput handleAddGuess={handleAddGuess} gameOutcome={gameOutcome}/>
+    <GuessInput handleAddGuess={handleAddGuess} gameResult={gameResult}/>
   </>
   )
 }

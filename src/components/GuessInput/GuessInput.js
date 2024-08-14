@@ -1,12 +1,12 @@
 import React from 'react';
 
-function GuessInput({handleAddGuess, gameOutcome}) {
+function GuessInput({handleAddGuess, gameResult}) {
   const [wordGuess, setWordGuess] = React.useState('');
  
-  console.debug("====>Render GuessInput");
+  console.debug("====>Render GuessInput -> gameOutcome: " + JSON.stringify(gameResult));
 
   function addWordGuess(event) {   
-    console.debug("->addWordGuess: " + wordGuess + " gameOutcome: " + gameOutcome); 
+    console.debug("->addWordGuess: " + wordGuess); 
     event.preventDefault()    
     handleAddGuess(wordGuess)
     setWordGuess('')            
@@ -22,7 +22,7 @@ function GuessInput({handleAddGuess, gameOutcome}) {
           let guessText = event.target.value
           setWordGuess(guessText.toUpperCase())           
         }}
-        disabled={gameOutcome}
+        disabled={gameResult.gameOver}
       />
     </form>
   )
