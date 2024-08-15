@@ -63,7 +63,6 @@ function Game() {
       numTries: numTries      
     }
     setGameResult(newGameResult)
-    console.debug("=>checkGameOutcome -> gameOver: " + gameOver + " | winner: " + winner);
     console.debug("=>checkGameOutcome -> newGameResult: " + JSON.stringify(newGameResult));
   }  
 
